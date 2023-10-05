@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+	<link href="https://fonts.googleapis.com/css2?family=News+Cycle:wght@700&family=Sacramento&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+
+	<title>
+		Search
+	</title>
+</head>
+
+<body style=" background-color: #dcdbdb">
+	<nav style="background-color: #eef1eb">
+		<a class="brand-logo"><a style="font-family: 'Sacramento', cursive;
+color: black; font-size: xx-large; font-weight: bold; padding-left:
+1%">Share Your Covid Story</a></a>
+
+	</nav>
+
+	
+	<div ng-app="" >
+		<p style="font-family:'Montserrat',cursive; color: black; font-size: 220%; font-weight: bold ; padding-left: 1%">
+			Hover over the cirle to search for any country's stats?</p>
+		
+		<div class="search-box">
+			<input class="search-txt" type="text" name="" placeholder="Type to search" ng-model="name">
+
+			<a class="search-btn" href="https://www.worldometers.info/coronavirus/country/{{name}}/"></a>
+		</div>
+</body>
+
+</html>

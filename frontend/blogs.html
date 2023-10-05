@@ -1,0 +1,287 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>ShareYourCovidStory</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=News+Cycle:wght@700&family=Sacramento&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('select').formSelect();
+            console.log("ok")
+        });
+    </script>
+    <style type="text/css">
+        .leftcolumn {
+            float: left;
+            width: 75%;
+        }
+
+        /* Right column */
+        .rightcolumn {
+            float: left;
+            width: 25%;
+            padding-left: 20px;
+        }
+
+        /* Fake image */
+        .fakeimg {
+            background-color: #aaa;
+            width: 100%;
+            padding: 20px;
+        }
+
+        /* Add a card effect for articles */
+        .card {
+            background-color: white;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 20px;
+            text-align: center;
+            background: #ddd;
+            margin-top: 20px;
+        }
+
+        html {
+            --lh: 1.4rem;
+            line-height: var(--lh);
+        }
+
+        .posts-content {
+            --max-lines: 5;
+            position: relative;
+            max-height: calc(var(--lh) * var(--max-lines));
+            overflow: hidden;
+            padding-right: 1rem;
+        }
+
+        h6.posts-author {
+            font-size: 50%;
+        }
+
+        ul.popular-post-list {
+            list-style-image:
+                url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAApUlEQVR4AU3QtyGFARRA4fvCAiZ4nZIpZJ0R5DiBEf7SAno5TCAMoJJzppa5PlnxnQFOxMRqU KWdRU45YZ5WKkRIhWFuSQBO6aUc0sk1+YM9CkbZoTVkkQRgkTpqHDMXckbyzDIHzNDAOAechJy SrFOjkXoKMuAwZIF7uhhkkh4uyYDpkA42GGOL5JEMuKQ5pMIAZyQAV //3BBVameOYI2ZppkK8A0dUxgERoZ5BAAAAAElFTkSuQmCC');
+
+        }
+    </style>
+</head>
+
+<body style="height: 100%; background-color: #dcdbdb">
+    <nav style="background-color: #eef1eb">
+        <a class="brand-logo"><a
+                style="font-family: 'Sacramento', cursive; color: black; font-size: xx-large; font-weight: bold; padding-left:1%">Share
+                Your Covid Story</a></a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="/home.html" style="font-family: 'News Cycle', sans-serif;color: black;font-size: large">Home</a></li>
+            <li><a href="/search.html" style="font-family: 'News Cycle', sans-serif;color: black;font-size: large">Search Stats by Country</a></li>
+            <li><a href="/blogs.html" style="font-family: 'News Cycle', sans-serif;color: black;font-size: large">Blogs</a></li>
+            <li><a href="/write.html" style="font-family: 'News Cycle', sans-serif;color: black;font-size: large">Write a blog</a></li>
+       
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="leftcolumn">
+                <div id="posts">
+                </div>
+                <div class="container"
+                    style="display: flex; flex-direction: row; justify-content: space-evenly; align-items: center;">
+                    <!--This is the previous button-->
+                    <button onclick="back()" class="waves-effect waves-light btn-large">Previous</button>
+                    <!--This section is the posts to display-->
+                    <div class="container" id="page-card-space"
+                        style="display: flex; flex-direction: row; justify-content: space-evenly; align-items: center;">
+                        <div class="card">1</div>
+                        <div class="card">2</div>
+                    </div>
+                    <!--This is the next button-->
+                    <button onclick="next()" class="waves-effect waves-light btn-large">Next</button>
+
+                    <div class="continer s3" style="width: 30px;"></div>
+                    <!--This is the page options -->
+                    <div class="s1" style="width: 7.5%">
+                        <select>
+                            <option value="4" selected>4</option>
+                            <option value="5" >5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                        </select>
+                        <label>Number of posts in one page</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rightcolumn">
+                <div class="card">
+                    <div class="card-title">Popular Posts</div>
+                    <div class="card-content">
+                        <ul class="popular-post-list" id="popular-posts-lists-1">
+                            <li><a>Post Heading 1</a></li>
+                            <li> <a>Post Heading 1</a></li>
+                            <li> <a>Post Heading 1</a></li>
+                            <li> <a>Post Heading 1</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var onPage = 1;
+        var pages = 3;
+
+        let month = new Array();
+        month[0] = "January";
+        month[1] = "February";
+        month[2] = "March";
+        month[3] = "April";
+        month[4] = "May";
+        month[5] = "June";
+        month[6] = "July";
+        month[7] = "August";
+        month[8] = "September";
+        month[9] = "October";
+        month[10] = "November";
+        month[11] = "December";
+        // /api/articles
+
+
+
+        // Or with jQuery
+
+        let Post = (obj) => {
+            let date = new Date(obj.timestamp);
+            date.setHours(date.getHours() + 5);
+            date.setMinutes(date.getMinutes() + 30);
+
+        let HTMLCode = `<div class="card">
+                    <div class="card-title">${obj.title}<h6 class="post-date">${month[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}</h6>
+                        <h6 class="posts-author">By ${obj.name}</h6>
+                        <h6 class="posts-author">Contact: <a href="mailto:${obj.email}">${obj.email} </h6>
+                    </div>
+                    <div class="card-action" style="margin-top: 1%">
+                        <a href="./view-post.html?id=${obj._id}">Read full</a>
+                    </div>
+                </div>`;
+            return HTMLCode;
+        };
+
+        let PopularPostsLinks = (obj) => {
+            let HTMLCode = `
+                <li><a href="./view-post.html?id=${obj._id}">${obj.title} by ${obj.name}</a></li>
+            `;
+            return HTMLCode;
+        }
+
+        function updatePopularPosts(data) {
+            let HTMLCode = "";
+            data.forEach(o => {
+                HTMLCode += PopularPostsLinks(o);
+            });
+            $("#popular-posts-lists-1").html(HTMLCode);
+        }
+
+        function updatePostsCards(data) {
+            let HTMLCode = "";
+            data.forEach(o => {
+                HTMLCode += Post(o);
+            });
+            console.log(HTMLCode)
+            $("#posts").html(HTMLCode)
+        }
+
+        $(document).ready(async () => {
+            try {
+                let response = await fetch("http://localhost:8080/api/articles/popular");
+                let data = await response.json();
+                updatePopularPosts(data["data"]);
+            } catch (e) {
+                alert(e)
+            }
+            // try {
+            //     let URL = "http://localhost:8080/api/articles?page=1&size=4";
+            //     let response = await fetch(URL);
+            //     let data = await response.json();
+            //     updatePostsCards(data["data"]);
+            // } catch (e) {
+            //     alert(e)
+            // }
+            update();
+
+        })
+
+
+        function updatePagesContainer() {
+            let HTMLCode = "";
+            for (let x = 1; x <= pages; ++x) {
+                if (x == onPage)
+                    HTMLCode += PageOnCard(x);
+                else
+                    HTMLCode += PageCard(x);
+            }
+            $("#page-card-space").html(HTMLCode);
+        }
+
+
+
+        function PageCard(i) {
+            return `<div class="card">${i}</div>`;
+        }
+
+        function PageOnCard(i) {
+            return `<div class="card" style="background-color: black; color: white;">${i}</div>`
+        }
+
+        async function update() {
+            let pageSize = $("select").val();
+            let URL = `http://localhost:8080/api/articles?page=${onPage}&size=${pageSize}`;
+            try {
+                let response = await fetch(URL);
+                let data = await response.json();
+                pages = data["pages"];
+                updatePostsCards(data["data"]);
+                updatePagesContainer();
+            } catch (e) {
+                alert(e)
+            }
+        }
+
+        function next() {
+            onPage +=1;
+            update();
+        }
+
+        function back() {
+            onPage -= 1;
+            update();
+        }
+        $("select").change(() => {
+            onPage = 1;
+            update()
+        })
+
+    </script>
+</body>
+
+</html>

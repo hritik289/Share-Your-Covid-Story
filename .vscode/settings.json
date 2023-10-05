@@ -1,0 +1,5 @@
+{
+    "git.ignoreLimitWarning": true,
+    "liveServer.settings.port": 5500, // Set your desired port
+    "liveServer.settings.root": "frontend" // Set the root folder of your project
+  }

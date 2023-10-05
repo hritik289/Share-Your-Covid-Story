@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>ShareYourCovidStory</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materia
+lize.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=News+Cycle:wght@700&family=Sacramento&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.ckeditor.com/ckeditor5/22.0.0/classic/ckeditor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"
+        integrity="sha512-7oYXeK0OxTFxndh0erL8FsjGvrl2VMDor6fVqzlLGfwOQQqTbYsGPv4ZZ15QHfSk80doyaM0ZJdvkyDcVO7KFA=="
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-csp.css"
+        integrity="sha512-f7WVHp6iaZ7iOx9duYm67KLwCFJ9KirfMIK0MAOxf1wq5M8Ogdw5ljbCxlk/BtWIbyXWMsIaDaqwUpXttPQ/5g=="
+        crossorigin="anonymous" />
+
+        <style>
+            .error-p {
+                color: red;
+                font-size: xx-small;
+            }
+        </style>
+
+</head>
+
+<body style="height: 100%; background-color: #dcdbdb">
+    <nav style="background-color: #eef1eb">
+        <a class="brand-logo"><a style="font-family: 'Sacramento', cursive;color: black; font-size: xx-large; font-weight: bold; padding-left:
+1%">Share Your Covid Story</a></a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="/home.html" style="font-family: 'News Cycle', sans-serif;color: black;font-size: large">Home</a></li>
+            <li><a href="/search.html" style="font-family: 'News Cycle', sans-serif;color: black;font-size: large">Search Stats by Country</a></li>
+            <li><a href="/blogs.html" style="font-family: 'News Cycle', sans-serif;color: black;font-size: large">Blogs</a></li>
+            <li><a href="/write.html" style="font-family: 'News Cycle', sans-serif;color: black;font-size: large">Write a blog</a></li>
+        </ul>
+    </nav>
+    <div class="container" style="margin-top: 5%;margin-bottom: 5%;padding-bottom: 3%; background-color: #f8f8f8">
+        <div class="row" style="padding-top: 2%">
+            <h4 style="padding-left: 2%; font-family: 'News Cycle'">Write your
+                story.</h4>
+            <div ng-app="app" ng-controller="ctrl">
+                <!-- action="http://localhost:3000/blog" method="post" -->
+                <form name="formW" class="col s12" ng-submit="onsubmitAction(formW)" >
+                    <div class="input-field col s6">
+                        <input placeholder="Full Name" name="name" id="name" type="text" class="validate"
+                            ng-model="name" required ng-pattern="onlytext" pattern="[a-zA-Z ]+">
+                        <label for="name">Name</label>
+                        <p class="error-p" ng-show="formW.name.$error.pattern">Only Alphabets are allowed.</p>
+                    </div>
+                    <div class="input-field col s6">
+                        <input placeholder="Duration of illness (in Days)" name="duration" id="duration" type="text"
+                            class="validate" ng-model="duration" pattern="[0-9]+" required ng-pattern="onlyNumber">
+                        <label for="duration">Duration of illness (in Days)</label>
+                        <p class="error-p" ng-show="formW.duration.$error.pattern">Only numbers are allowed.</p>
+                    </div>
+                    <div class="input-field col s6">
+                        <input placeholder="Age" id="Age" type="text" name="age" class="validate" ng-model="age" required pattern="[0-9]+" ng-pattern="onlyNumber">
+                        <label for="Age" >Age</label>
+                        <p class="error-p" ng-show="formW.age.$error.pattern">Only numbers are allowed.</p>
+
+                    </div>
+                    <div class="input-field col s6">
+                        <input placeholder="Email" id="email" type="text" name="email" class="validate"
+                            ng-model="email" required ng-pattern="emailPattern" pattern="{{emailPattern}}">
+                        <label for="email">Your email address</label>
+                        <p class="error-p" ng-show="formW.email.$error.pattern">Wrong email format.</p>
+                    </div>
+                    <div class="input-field col s6">
+                        <input placeholder="Your blog title here" id="title" type="text" name="title" class="validate"
+                            ng-model="title" ng-change="onchangetitle()" required>
+                        <label for="title">Your blog title here</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input placeholder="Write about your profession here" id="profession" type="text"
+                            name="profession" class="validate" ng-model="profession" required>
+                        <label for="profession">Your profession goes here</label>
+                    </div>
+                    <label for="blog">Write your blog here</label>
+                    <textarea id="blog" name="blog" ng-model="blog"></textarea>
+                    <input style="margin-top: 2%" type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        let CKEDITOR;
+        ClassicEditor
+            .create(document.querySelector('#blog'))
+            .then(editor => {
+                CKEDITOR = (editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+            
+            var app = angular.module('app', []);
+            app.controller('ctrl', ['$scope',($scope) => {
+                $scope.onlytext = "[a-zA-Z ]+"
+                $scope.onlyNumber = "[0-9]+"
+                $scope.emailPattern = "[a-zA-Z0-9._]+@[a-zA-Z0-9]+\.[a-z.]{2,5}";
+                $scope.onchangetitle = function(){
+                    console.log(CKEDITOR.getData());
+                };
+
+                $scope.onsubmitAction = async (form) => {
+                    if (form.$valid) {
+                        if (CKEDITOR.getData().length == 0) {
+                            alert("Content Body is empty! Try filling in something and try again!");
+                        } else {
+                            /*{
+    "name" : "Amit Kumar", "duration": 12, "age": 30, "email": "amit@gmail.com", "title": "Done", "prof": "Rockstar", "body": "Done"
+                        }*/
+                        let name = $scope.name;
+                        let duration =parseInt( $scope.duration);
+                        let age = parseInt($scope.age);
+                        let email = $scope.email;
+                        let title = $scope.title;
+                        let prof = $scope.profession;
+                        let body = CKEDITOR.getData();
+
+                        let raw_body = (JSON.stringify({
+                            name,
+                            duration,
+                            age,
+                            email,
+                            title,
+                            prof,
+                            body
+                        }))
+
+                        try  {
+
+                            let response = await fetch("http://localhost:8080/api/articles/new", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: raw_body
+                            })
+
+                            if (response.status == 200) {
+                                let {code, error, message} = await response.json();
+                                if (error) {
+                                    alert(`Opps! ${message}`);
+                                } else {
+                                    alert(message + " redirecting..");
+                                    window.location.href = "/blogs.html"
+                                }
+                            }
+                        } catch (e) {
+                            alert(e)
+                        }
+                        }
+
+                    } else {
+                        alert("Some values are invalid!")
+                    }
+                }
+            }])
+
+
+           
+    </script>
+</body>
+
+</html>
