@@ -125,24 +125,3 @@ app.listen(8080, () => console.log("listening to port 8080..."))
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const uri = "mongodb+srv://main:Sx4gpcPG0CEEaelq@maincluster.jjjnn.mongodb.net/main?retryWrites=true&w=majority";
