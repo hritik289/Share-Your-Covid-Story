@@ -1,6 +1,7 @@
 # Share-Your-Covid-Story
 
-#Overview
+<B>Overview<B>
+<BR>
 The core aim of the project is to provide a safe and collaborative platform, where COVID survivors share
 the pain and struggles they had to go through during the ordeal. To provide people with such a platform
 which is safe for people to share their stories we have incorporated ML Technologies on our blogging
